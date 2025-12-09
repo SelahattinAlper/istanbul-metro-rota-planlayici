@@ -1,0 +1,12 @@
+# CLion/JetBrains IDE ayar dosyaları
+.idea/
+
+# Derleme çıktıları (build klasörleri)
+cmake-build-*/
+
+# VS Code ayar klasörleri (Arkadaşın için ekliyoruz)
+.vscode/
+
+# Binaries ve loglar (Derlenmiş çalıştırılabilir dosyalar)
+*.exe
+*.log
