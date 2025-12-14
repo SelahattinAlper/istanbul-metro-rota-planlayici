@@ -4,8 +4,8 @@
 #include <limits.h> // INT_MAX için gerekli
 
 // --- 1. Sabit Tanımlamalar ---
-#define MAX_STOPS 300
-#define MAX_NAME_LEN 30 
+#define MAX_STOPS 1500
+#define MAX_NAME_LEN 100 
 // INF'i long long'a uyumlu olarak tanımla
 #define INF 2147483647L // INT_MAX (L soneki, long tipine işaret eder)
 

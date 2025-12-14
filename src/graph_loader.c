@@ -1,9 +1,6 @@
-// src/graph_loader.c dosyasının tüm içeriğini bununla değiştirin.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// include yollarınızın doğru ayarlandığını varsayıyoruz
 #include "../includes/structs.h" 
 #include "../includes/algorithms.h" 
 
@@ -21,7 +18,7 @@ void add_edge(Stop* stop, int target_id, int duration, const char* line_name, in
     new_edge->line[9] = '\0';
     new_edge->congestion_score = congestion_score;
     new_edge->is_closed = is_closed;
-    
+
     // Bağlı listenin başına ekle
     new_edge->next = stop->head;
     stop->head = new_edge;
@@ -44,15 +41,13 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
         graph->stops[i].head = NULL;
     }
 
-    // KRİTİK İYİLEŞTİRME: CSV Başlık Satırını Atla
+    //CSV Başlık Satırını Atla
     if (fgets(line, sizeof(line), file) == NULL) {
         fclose(file);
         return;
     }
 
-    // =================================================================
     // 1. GEÇİŞ: Temel Durak Bilgilerini ve İleri Kenarları (u -> v) Oluşturma
-    // =================================================================
     rewind(file); 
     
     // Başlığı tekrar atla 
@@ -102,14 +97,8 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
         free(neighbors_copy);
         free(tmp);
     }
-    
-    // src/graph_loader.c dosyasındaki İKİNCİ GEÇİŞ bölümünü bu kodla DEĞİŞTİRİN:
 
-// src/graph_loader.c dosyasındaki İKİNCİ GEÇİŞ bölümünü bu kodla DEĞİŞTİRİN:
-
-    // =================================================================
     // 2. GEÇİŞ: Geri dönüş kenarlarını (v -> u) ekleyerek grafı çift yönlü yapma
-    // =================================================================
     
     rewind(file);
     
@@ -157,10 +146,8 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
             }
             neighbor_token = strtok(NULL, ";\n");
         }
-        
         free(neighbors_copy);
         free(tmp);
     }
-    
     fclose(file);
 }

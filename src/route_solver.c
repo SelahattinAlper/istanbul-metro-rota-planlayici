@@ -1,33 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-// Bu include'lar, structs.h ve algorithms.h dosyalarındaki tanımları içerir
 #include "../includes/structs.h"
 #include "../includes/algorithms.h"
 
-
-#define MAX_STOPS 300
 extern int queue_arr[MAX_STOPS];
 extern int front;
 extern int rear;
 
 // --- Global Değişkenler (Kuyruk için) ---
-// ... (Kuyruk tanımı aynı kalır)
 #define QUEUE_MAX_SIZE MAX_STOPS
 int queue_arr[QUEUE_MAX_SIZE];
 int front = -1, rear = -1;
 
 // --- Kuyruk Fonksiyonları ---
-// ... (enqueue, dequeue, is_queue_empty fonksiyonları aynı kalır)
 
 // Yolu recursive olarak yazdıran yardımcı fonksiyon
 void print_path(Graph* graph, int end_id, const int parent[]) {
     if (parent[end_id] == -1) {
-        printf("%s (%d)", graph->stops[end_id - 1].name, end_id);
+        printf("%s ", graph->stops[end_id - 1].name);
         return;
     }
     print_path(graph, parent[end_id], parent);
-    printf(" -> %s (%d)", graph->stops[end_id - 1].name, end_id);
+    printf("-> %s ", graph->stops[end_id - 1].name);
 }
 
 // *** ÇOK KRİTERLİ AĞIRLIK HESAPLAMA YARDIMCISI ***
@@ -43,27 +38,22 @@ long long calculate_dynamic_cost(Edge* edge) {
     // Örneğin, yoğunluk 3 ise çarpan 1 + (2 * 0.2) = 1.4 olur.
     // 1 puan = 0, 2 puan = %20, 5 puan = %80 ceza
     double congestion_factor = (double)(edge->congestion_score - 1) * 0.2;
-    
+
     // Total maliyet = Temel Süre * (1 + Çarpan)
     long long current_cost = (long long)(edge->duration * (1.0 + congestion_factor));
-    
-    // NOT: Aktarma cezası (aktarma sayısı) eklemek için bu fonksiyona 
+
+    // NOT: Aktarma cezası (aktarma sayısı) eklemek için bu fonksiyona
     // önceki düğümün hattı ve toplam aktarma sayısı bilgisi de geçirilmelidir.
-    
+
     return current_cost;
 }
-
-
-// Dijkstra Algoritması (GÜNCELLENMİŞ)
-
-// src/route_solver.c dosyası (Dijkstra)
 
 void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
     // dist dizisi long long olmalı
     long long dist[MAX_STOPS + 1]; 
     int parent[MAX_STOPS + 1]; 
     
-    // INF değeri de long long olmalı (structs.h'te LONG_INF tanımlanmadığı için INT_MAX kullanmaya devam ediyoruz)
+
     
     for (int i = 1; i <= graph->num_stops; i++) {
         dist[i] = INF; 
@@ -88,8 +78,7 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
         minHeap->size++;
     }
     
-    // Burası, MinHeap'teki başlangıç düğümünün mesafesinin 0'a güncellenmesini
-    // ve köke taşınmasını garanti eder.
+    // Burası, MinHeap'teki başlangıç düğümünün mesafesinin 0'a güncellenmesini ve köke taşınmasını garanti eder.
     decrease_key(minHeap, start_id, 0);
 
     while (minHeap->size > 0) {
@@ -103,9 +92,6 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
         Stop* u_stop = &graph->stops[u_id - 1];
         Edge* edge = u_stop->head;
 
-        // src/route_solver.c dosyasında, dijkstra_shortest_time fonksiyonu içinde:
-
-// ... (while (edge != NULL) döngüsünün içinde)
 
         while (edge != NULL) {
             int v_id = edge->target_id;
@@ -134,7 +120,6 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
             }
             edge = edge->next;
         }
-// ...
     }
     
     // 4. Sonuçları Yazdırma
@@ -146,11 +131,10 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
     } else {
         printf("Hedefe ulasilamadi.\n");
     }
-    // ... (Bellek temizliği)
 }
 
 
-//QUEUE
+
 int is_queue_empty() {
     return front == -1;
 }

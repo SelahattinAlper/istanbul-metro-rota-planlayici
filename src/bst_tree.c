@@ -1,13 +1,9 @@
-// src/bst_tree.c dosyasına ekleyin
-
 #include <stdlib.h>
 #include <string.h>
 #include "../includes/structs.h"
 
 
-
-
-// 1. Yeni Düğüm Oluşturma
+//Yeni Düğüm Oluşturma
 Node* createNode(const char* name, int id) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode == NULL) { /* Hata yönetimi */ exit(EXIT_FAILURE); }
@@ -20,12 +16,11 @@ Node* createNode(const char* name, int id) {
     return newNode;
 }
 
-// 2. Ekleme İşlevi
+//Ekleme İşlevi
 Node* insert_bst(Node* root, const char* name, int id) {
     if (root == NULL) {
         return createNode(name, id);
     }
-
     // String karşılaştırması
     int comparison = strcmp(name, root->name);
 
@@ -39,7 +34,7 @@ Node* insert_bst(Node* root, const char* name, int id) {
     return root;
 }
 
-// 3. Arama İşlevi
+//Arama İşlevi
 int search_bst(Node* root, const char* name) {
     if (root == NULL) {
         return -1; // Bulunamadı

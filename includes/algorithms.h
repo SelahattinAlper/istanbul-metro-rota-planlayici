@@ -29,7 +29,7 @@ void add_edge(Stop* stop, int target_id, int duration, const char* line_name, in
 // BFS
 void bfs_min_transfers(Graph* graph, int start_id, int end_id);
 
-// --- Kuyruk Fonksiyonları ---
+//Kuyruk Fonksiyonları
 int is_queue_empty();
 void enqueue(int stop_id);
 int dequeue();

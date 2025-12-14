@@ -3,7 +3,6 @@
 #include "../includes/structs.h" 
 #include "../includes/algorithms.h"
 
-// NOT: INF'in structs.h'te long long'a uyumlu bir değer (örn. INT_MAX) olduğunu varsayıyoruz.
 
 // 1. Min-Heap Yapısını Oluşturma
 MinHeap* createMinHeap(int capacity) {
@@ -80,7 +79,6 @@ HeapNode extract_min(MinHeap* minHeap) {
 }
 
 // 5. Anahtar Değerini Azaltma (decrease_key) - Dijkstra için KRİTİK
-// new_distance artık long long tipindedir
 void decrease_key(MinHeap* minHeap, int stop_id, long long new_distance) { 
     int i = minHeap->pos[stop_id]; 
     
