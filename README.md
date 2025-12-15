@@ -29,7 +29,7 @@ make
 ### Manuel Derleme
 
 ```bash
-gcc main.c src/*.c -I. -o metro_planner -lm
+gcc main.c src/bst_tree.c src/graph_loader.c src/min_heap.c src/route_solver.c -I. -o metro_planner -lm
 ```
 
 ## Kullanım

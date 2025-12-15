@@ -32,6 +32,7 @@ clean:
 	@echo "Clean complete"
 
 # Install target (optional - copies to /usr/local/bin)
+# WARNING: This requires sudo privileges. Review before running.
 install: $(TARGET)
 	@echo "Installing $(TARGET) to /usr/local/bin"
 	@sudo cp $(TARGET) /usr/local/bin/

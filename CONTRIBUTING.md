@@ -7,9 +7,10 @@
 1. Projeyi fork edin
 2. Repository'yi yerel makinenize klonlayın:
    ```bash
-   git clone https://github.com/KULLANICI_ADINIZ/istanbul-metro-rota-planlayici.git
+   git clone https://github.com/your-username/istanbul-metro-rota-planlayici.git
    cd istanbul-metro-rota-planlayici
    ```
+   (your-username yerine kendi GitHub kullanıcı adınızı yazın)
 3. Projeyi derleyin ve çalıştığından emin olun:
    ```bash
    make
