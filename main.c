@@ -17,7 +17,7 @@ extern int rear;
 
 int main() {
 
-    const char* file_name = "../istanbul-metro-rota-planlayici/metro.csv";
+    const char* file_name = "metro.csv";
 
     // 1. Yapıları Başlatma
     Graph city_graph;

@@ -10,3 +10,6 @@ cmake-build-*/
 # Binaries ve loglar (Derlenmiş çalıştırılabilir dosyalar)
 *.exe
 *.log
+metro_planner
+*.out
+*.o
