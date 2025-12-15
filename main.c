@@ -14,9 +14,10 @@ extern int queue_arr[QUEUE_MAX_SIZE];
 extern int front;
 extern int rear;
 
+
 int main() {
 
-    const char* file_name = "metro.csv";
+    const char* file_name = "../istanbul-metro-rota-planlayici/metro.csv";
 
     // 1. Yapıları Başlatma
     Graph city_graph;
@@ -69,7 +70,7 @@ int main() {
     while (1) {
         printf("\nLutfen bir islem seciniz:\n");
         printf("1-En Kisa Sure Hesaplama (Dijkstra)\n");
-        printf("2-En Az Aktarma/Durak Hesaplama (BFS)\n");
+        printf("2-En Az Durak Hesaplama (BFS)\n");
         printf("3-Yeni Rota Belirle\n");
         printf("4-Cikis\n");
         printf("Seciminiz: ");
@@ -100,8 +101,6 @@ int main() {
                 break;
         }
     }
-    // 4. Bellek Temizliği (Gerçek projede tüm malloc'lar temizlenmelidir)
-    // free_bst(root_bst);
-    // free_graph_edges(&city_graph);
+
     return 0;
 }
