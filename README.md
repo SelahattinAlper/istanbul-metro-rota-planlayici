@@ -107,6 +107,14 @@ Projeye katkıda bulunmak isterseniz:
 4. Branch'inizi push edin (`git push origin feature/yeniOzellik`)
 5. Pull Request oluşturun
 
+Detaylı bilgi için [CONTRIBUTING.md](CONTRIBUTING.md) dosyasına bakınız.
+
+## Dökümanlar
+
+- **[README.md](README.md)**: Projeye genel bakış ve kurulum
+- **[EXAMPLES.md](EXAMPLES.md)**: Detaylı kullanım örnekleri ve senaryolar
+- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Katkıda bulunma rehberi
+
 ## Lisans
 
 Bu proje eğitim amaçlı geliştirilmiştir.
