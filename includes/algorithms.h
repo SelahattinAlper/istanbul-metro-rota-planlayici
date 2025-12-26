@@ -19,7 +19,7 @@ int is_in_min_heap(MinHeap* minHeap, int stop_id);
 
 // Dijkstra Algoritması
 void print_path(Graph* graph, int end_id, const int parent[]); // Yardımcı
-void dijkstra_shortest_time(Graph* graph, int start_id, int end_id);
+long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* out_parent);
 
 
 // Graf Yükleme
@@ -27,7 +27,7 @@ void parse_and_build_graph(const char* filename, Graph* graph);
 void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score, int is_closed);
 
 // BFS
-void bfs_min_transfers(Graph* graph, int start_id, int end_id);
+int bfs_min_transfers(Graph* graph, int start_id, int end_id, int* out_parent);
 
 //Kuyruk Fonksiyonları
 int is_queue_empty();

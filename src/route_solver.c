@@ -8,7 +8,7 @@ extern int queue_arr[MAX_STOPS];
 extern int front;
 extern int rear;
 
-// --- Global Değişkenler (Kuyruk için) ---
+
 #define QUEUE_MAX_SIZE MAX_STOPS
 int queue_arr[QUEUE_MAX_SIZE];
 int front = -1, rear = -1;
@@ -48,12 +48,10 @@ long long calculate_dynamic_cost(Edge* edge) {
     return current_cost;
 }
 
-void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
+long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* out_parent) {
     // dist dizisi long long olmalı
     long long dist[MAX_STOPS + 1]; 
     int parent[MAX_STOPS + 1]; 
-    
-
     
     for (int i = 1; i <= graph->num_stops; i++) {
         dist[i] = INF; 
@@ -64,27 +62,21 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
 
     MinHeap* minHeap = createMinHeap(graph->num_stops);
     
-    
     // KRİTİK BAŞLATMA: MinHeap'in Doldurulması
-    // Heap'i tüm düğümlerle, başlangıç mesafeleriyle ve pozisyonlarla doldur.
     minHeap->size = 0;
     for (int i = 1; i <= graph->num_stops; i++) {
         minHeap->array[minHeap->size].stop_id = i;
-        
-        // dist dizisinden doğru long long mesafeyi al
         minHeap->array[minHeap->size].distance = dist[i]; 
-        
         minHeap->pos[i] = minHeap->size;
         minHeap->size++;
     }
     
-    // Burası, MinHeap'teki başlangıç düğümünün mesafesinin 0'a güncellenmesini ve köke taşınmasını garanti eder.
     decrease_key(minHeap, start_id, 0);
 
     while (minHeap->size > 0) {
         HeapNode extracted = extract_min(minHeap);
         int u_id = extracted.stop_id;
-        long long u_dist = extracted.distance; // long long olarak okundu
+        long long u_dist = extracted.distance;
 
         if (u_dist == INF) break; 
         if (u_id == end_id) break; 
@@ -92,45 +84,50 @@ void dijkstra_shortest_time(Graph* graph, int start_id, int end_id) {
         Stop* u_stop = &graph->stops[u_id - 1];
         Edge* edge = u_stop->head;
 
-
         while (edge != NULL) {
             int v_id = edge->target_id;
-            long long current_cost = calculate_dynamic_cost(edge); // long long maliyet
+            long long current_cost = calculate_dynamic_cost(edge);
 
-            if (current_cost >= INF) { // Kapalı yol veya taşma
+            if (current_cost >= INF) {
                 edge = edge->next;
                 continue;
             }
 
-            // Gevşetme (Relaxation) işlemi
-            // KRİTİK KONTROL: dist[u_id] != INF kontrolü, dist[u_id] + current_cost'un taşmasını önler.
-            // Ayrıca, Heap'e eklenecek yeni mesafenin (dist[u_id] + current_cost) eski mesafeden (dist[v_id]) KÜÇÜK olması gerekir.
             if (dist[u_id] != INF && dist[u_id] + current_cost < dist[v_id]) {
-                
                 dist[v_id] = dist[u_id] + current_cost;
                 parent[v_id] = u_id;
 
-                // Heap'e ekle veya güncelle
-                // Eğer Heap'te varsa, decrease_key ile güncelle (artık long long tipini kabul ediyor)
                 if (is_in_min_heap(minHeap, v_id)) {
                     decrease_key(minHeap, v_id, dist[v_id]);
                 }
-                // Eğer Heap'te yoksa, buraya ekleme mantığı gelmeli. 
-                // (Mevcut yapınızda, MinHeap ilk başta tüm düğümleri içerdiği için bu adım genellikle gereksizdir.)
             }
             edge = edge->next;
         }
     }
+
+    // Heap temizliği
+    free(minHeap->array);
+    free(minHeap->pos);
+    free(minHeap);
     
-    // 4. Sonuçları Yazdırma
-    if (dist[end_id] != INF) { 
-        printf("Toplam Sure: %lld dakika\n", dist[end_id]); 
-        printf("Rota: ");
-        print_path(graph, end_id, parent);
-        printf("\n");
+    // Parent dizisini dışarı kopyala (eğer isteniyorsa)
+    if (out_parent != NULL) {
+        for (int i = 1; i <= graph->num_stops; i++) {
+            out_parent[i] = parent[i];
+        }
     } else {
-        printf("Hedefe ulasilamadi.\n");
+        // Konsol çıktısı (eski davranış)
+        if (dist[end_id] != INF) { 
+            printf("Toplam Sure: %lld dakika\n", dist[end_id]); 
+            printf("Rota: ");
+            print_path(graph, end_id, parent);
+            printf("\n");
+        } else {
+            printf("Hedefe ulasilamadi.\n");
+        }
     }
+    
+    return dist[end_id];
 }
 
 
@@ -169,29 +166,24 @@ int dequeue() {
 // BFS Algoritması (Aynı kalır, sadece minimum durak sayısını hesaplar)
 // src/route_solver.c dosyasında, bfs_min_transfers fonksiyonunun TAMAMI:
 
-void bfs_min_transfers(Graph* graph, int start_id, int end_id) {
-    int level[MAX_STOPS + 1]; // Başlangıçtan bu durağa minimum durak sayısını tutar
+int bfs_min_transfers(Graph* graph, int start_id, int end_id, int* out_parent) {
+    int level[MAX_STOPS + 1];
     int parent[MAX_STOPS + 1]; 
     
-    // Başlatma (level dizisini INF olarak ayarla)
     for (int i = 1; i <= graph->num_stops; i++) {
         level[i] = INF; 
         parent[i] = -1;
     }
     
-    // Kuyruk sıfırlama (Her çağrıda temizlenmeli)
+    // Kuyruk sıfırlama
     front = -1; rear = -1; 
     
     level[start_id] = 0;
     enqueue(start_id);
     
-    // ===================================
-    // KRİTİK EKSİK KISIM: BFS DÖNGÜSÜ
-    // ===================================
     while (!is_queue_empty()) {
         int u_id = dequeue();
 
-        // Hedefe ulaşıldıysa döngüyü kır
         if (u_id == end_id) break;
 
         Stop* u_stop = &graph->stops[u_id - 1];
@@ -200,26 +192,32 @@ void bfs_min_transfers(Graph* graph, int start_id, int end_id) {
         while (edge != NULL) {
             int v_id = edge->target_id;
 
-            // Eğer komşu durak daha önce ziyaret edilmediyse (level == INF)
             if (level[v_id] == INF) {
-                // Seviyeyi güncelle (1 adım daha uzak)
                 level[v_id] = level[u_id] + 1; 
-                // Parent'ı ata
                 parent[v_id] = u_id;
-                // Kuyruğa ekle
                 enqueue(v_id);
             }
             edge = edge->next;
         }
-    } // 
-    
-    // KRİTİK: BFS Sonuç Yazdırma
-    if (level[end_id] != INF) {
-        printf("Minimum Durak Sayisi: %d\n", level[end_id]);
-        printf("Rota: ");
-        print_path(graph, end_id, parent);
-        printf("\n");
-    } else {
-        printf("Hedefe ulasilamadi.\n");
     }
+    
+    // Parent dizisini dışarı kopyala (eğer isteniyorsa)
+    if (out_parent != NULL) {
+        for (int i = 1; i <= graph->num_stops; i++) {
+            out_parent[i] = parent[i];
+        }
+    } else {
+        // Konsol çıktısı (eski davranış)
+        if (level[end_id] != INF) {
+            printf("Minimum Durak Sayisi: %d\n", level[end_id]);
+            printf("Rota: ");
+            print_path(graph, end_id, parent);
+            printf("\n");
+        } else {
+            printf("Hedefe ulasilamadi.\n");
+        }
+    }
+    
+    return level[end_id];
 }
+
