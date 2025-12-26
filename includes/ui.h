@@ -6,13 +6,11 @@
 
 // --- Pencere boyutları ---
 #define MAIN_WINDOW_WIDTH 1400
-#define MAIN_WINDOW_HEIGHT 800
+#define MAIN_WINDOW_HEIGHT 1000
 #define ROUTE_WINDOW_WIDTH 1100
 #define ROUTE_WINDOW_HEIGHT 600
 
 // --- UI Sabitleri ---
-#define MAX_VISIBLE_STOPS 6
-#define STOPS_PER_ROW 4
 #define CIRCLE_RADIUS 22
 #define CIRCLE_SPACING 55
 

@@ -17,7 +17,6 @@ void add_edge(Stop* stop, int target_id, int duration, const char* line_name, in
     strncpy(new_edge->line, line_name, 9);
     new_edge->line[9] = '\0';
     new_edge->congestion_score = congestion_score;
-    new_edge->is_closed = is_closed;
 
     // Bağlı listenin başına ekle
     new_edge->next = stop->head;
@@ -150,4 +149,29 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
         free(tmp);
     }
     fclose(file);
+}
+
+// Rastgele yoğunluk değerleri ata
+void generate_random_congestion(Graph* graph) {
+    for (int i = 0; i < graph->num_stops; i++) {
+        if (graph->stops[i].id == -1) continue;
+        
+        Edge* edge = graph->stops[i].head;
+        while (edge != NULL) {
+            // 1-5 arası rastgele yoğunluk değeri
+            int random_val = rand() % 100;
+            
+            if (random_val < 50) {
+                edge->congestion_score = 1 + (rand() % 2);  // 1-2: Sakin
+            } else if (random_val < 80) {
+                edge->congestion_score = 3;  // Orta
+            } else if (random_val < 95) {
+                edge->congestion_score = 4;  // Yoğun
+            } else {
+                edge->congestion_score = 5;  // Çok yoğun
+            }
+            
+            edge = edge->next;
+        }
+    }
 }

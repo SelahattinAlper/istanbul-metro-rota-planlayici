@@ -13,9 +13,6 @@ extern int rear;
 int queue_arr[QUEUE_MAX_SIZE];
 int front = -1, rear = -1;
 
-// --- Kuyruk Fonksiyonları ---
-
-// Yolu recursive olarak yazdıran yardımcı fonksiyon
 void print_path(Graph* graph, int end_id, const int parent[]) {
     if (parent[end_id] == -1) {
         printf("%s ", graph->stops[end_id - 1].name);
@@ -28,12 +25,7 @@ void print_path(Graph* graph, int end_id, const int parent[]) {
 // *** ÇOK KRİTERLİ AĞIRLIK HESAPLAMA YARDIMCISI ***
 // Bu fonksiyon, Kapalı Yol ve Yoğunluk kriterlerini ağırlığa yansıtır.
 long long calculate_dynamic_cost(Edge* edge) {
-    // 1. Kapalı Yol Kontrolü (Dinamik Engel)
-    if (edge->is_closed) {
-        return INF; // Kapalı yolu sonsuz maliyetle cezalandır.
-    }
-
-    // 2. Yoğunluk Maliyeti Hesaplama
+    // Yoğunluk Maliyeti Hesaplama
     // Yoğunluk çarpanı: 1 (Düşük) - 5 (Yüksek). Her puan %20 ekstra süre cezası ekler.
     // Örneğin, yoğunluk 3 ise çarpan 1 + (2 * 0.2) = 1.4 olur.
     // 1 puan = 0, 2 puan = %20, 5 puan = %80 ceza
@@ -49,7 +41,6 @@ long long calculate_dynamic_cost(Edge* edge) {
 }
 
 long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* out_parent) {
-    // dist dizisi long long olmalı
     long long dist[MAX_STOPS + 1]; 
     int parent[MAX_STOPS + 1]; 
     
@@ -130,8 +121,6 @@ long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* ou
     return dist[end_id];
 }
 
-
-
 int is_queue_empty() {
     return front == -1;
 }
@@ -163,9 +152,7 @@ int dequeue() {
     }
     return stop_id;
 }
-// BFS Algoritması (Aynı kalır, sadece minimum durak sayısını hesaplar)
-// src/route_solver.c dosyasında, bfs_min_transfers fonksiyonunun TAMAMI:
-
+// BFS Algoritması
 int bfs_min_transfers(Graph* graph, int start_id, int end_id, int* out_parent) {
     int level[MAX_STOPS + 1];
     int parent[MAX_STOPS + 1]; 

@@ -26,6 +26,9 @@ long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* ou
 void parse_and_build_graph(const char* filename, Graph* graph);
 void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score, int is_closed);
 
+// Rastgele yoğunluk değerleri ata
+void generate_random_congestion(Graph* graph);
+
 // BFS
 int bfs_min_transfers(Graph* graph, int start_id, int end_id, int* out_parent);
 

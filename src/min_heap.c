@@ -9,7 +9,6 @@ MinHeap* createMinHeap(int capacity) {
     MinHeap* minHeap = (MinHeap*)malloc(sizeof(MinHeap));
     if (minHeap == NULL) return NULL; 
 
-    // HeapNode'un long long içerdiğini varsayarak bellek ayır
     minHeap->pos = (int*)malloc((capacity + 1) * sizeof(int)); 
     minHeap->array = (HeapNode*)malloc((capacity + 1) * sizeof(HeapNode));
     

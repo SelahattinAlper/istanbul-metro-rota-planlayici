@@ -48,7 +48,6 @@ typedef struct Edge {
     int duration;
     char line[10];
     int congestion_score; // Canlı Yoğunluk Puanı (1-5)
-    int is_closed;        // Kapalı yol bayrağı (1=Kapalı, 0=Açık)
     struct Edge* next;    // Bağlı listedeki bir sonraki kenara işaretçi
 } Edge;
 

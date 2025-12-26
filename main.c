@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <raylib.h>
 
 #include "includes/structs.h"
@@ -19,12 +20,19 @@ int main() {
 
     Graph city_graph;
     Node* root_bst = NULL;
+    
+    // Rastgele sayı üreteci başlat (yoğunluk simülasyonu için)
+    srand((unsigned int)time(NULL));
 
     // a. Grafı belleğe yükle
     parse_and_build_graph(file_name, &city_graph);
     printf("Graf basariyla olusturuldu. Toplam durak: %d\n", city_graph.num_stops);
+    
+    // b. Başlangıç yoğunluk değerlerini oluştur
+    generate_random_congestion(&city_graph);
+    printf("Canli yogunluk verileri olusturuldu.\n");
 
-    // b. BST'yi doldur
+    // c. BST'yi doldur
     for (int i = 1; i <= city_graph.num_stops; i++) {
         if (city_graph.stops[i-1].id != -1) {
             root_bst = insert_bst(root_bst, city_graph.stops[i-1].name, city_graph.stops[i-1].id);
@@ -48,6 +56,7 @@ int main() {
     uiState.routeLength = 0;
     uiState.totalTime = 0;
     uiState.isDijkstraRoute = false;
+
 
 
     SetConfigFlags(FLAG_MSAA_4X_HINT);  // Anti-aliasing
