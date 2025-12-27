@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "../includes/structs.h"
-#include "../includes/algorithms.h"
+#include "structs.h"
+#include "algorithms.h"
 
 extern int queue_arr[MAX_STOPS];
 extern int front;

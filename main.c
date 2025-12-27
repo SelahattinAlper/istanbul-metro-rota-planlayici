@@ -4,9 +4,9 @@
 #include <time.h>
 #include <raylib.h>
 
-#include "includes/structs.h"
-#include "includes/algorithms.h"
-#include "includes/ui.h"
+#include "structs.h"
+#include "algorithms.h"
+#include "ui.h"
 
 // Kuyruk için extern tanımlamalar
 #define QUEUE_MAX_SIZE MAX_STOPS

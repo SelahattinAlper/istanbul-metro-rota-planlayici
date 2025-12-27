@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "../includes/structs.h"
+#include "structs.h"
 
 
 //Yeni Düğüm Oluşturma

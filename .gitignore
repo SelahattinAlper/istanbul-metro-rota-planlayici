@@ -3,10 +3,25 @@
 
 # Derleme çıktıları (build klasörleri)
 cmake-build-*/
+build/
+out/
 
-# VS Code ayar klasörleri (Arkadaşın için ekliyoruz)
-.vscode/
+# Object dosyaları
+*.o
+*.obj
+
+# VS Code ayar klasörleri (opsiyonel - projeye özel ayarlar hariç)
+# .vscode/
 
 # Binaries ve loglar (Derlenmiş çalıştırılabilir dosyalar)
 *.exe
 *.log
+
+# Backup dosyaları
+*_backup.c
+*_backup.h
+*.bak
+
+# MacOS ve Windows sistem dosyaları
+.DS_Store
+Thumbs.db

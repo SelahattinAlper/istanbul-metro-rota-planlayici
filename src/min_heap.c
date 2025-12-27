@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <limits.h>
-#include "../includes/structs.h" 
-#include "../includes/algorithms.h"
+#include "structs.h"
+#include "algorithms.h"
 
 
 // 1. Min-Heap Yapısını Oluşturma

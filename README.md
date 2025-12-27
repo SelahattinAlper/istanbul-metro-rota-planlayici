@@ -14,61 +14,89 @@
 
 ## Gereksinimler
 
-- GCC derleyicisi (veya başka bir C derleyicisi)
-- Make (opsiyonel, derlemeyi kolaylaştırır)
-- Linux/Unix tabanlı işletim sistemi veya Windows (MinGW ile)
+- **CMake** (3.15 veya üzeri)
+- **C Derleyici**: GCC, Clang veya MSVC
+- **Raylib**: Otomatik olarak CMake ile indirilir
+- **IDE (Önerilen)**: CLion veya VS Code + CMake Tools eklentisi
 
 ## Derleme
 
-### Make ile (Önerilen)
+### CLion ile
+
+1. Projeyi CLion'da açın
+2. CMake otomatik olarak yapılandırılacaktır
+3. **Build > Build Project** veya `Ctrl+F9` ile derleyin
+4. **Run > Run** veya `Shift+F10` ile çalıştırın
+
+### VS Code ile
+
+1. Gerekli eklentileri yükleyin:
+   - **C/C++** (Microsoft)
+   - **CMake Tools** (Microsoft)
+
+2. Projeyi VS Code'da açın
+3. `Ctrl+Shift+P` > "CMake: Configure" seçin
+4. `Ctrl+Shift+B` ile derleyin veya F5 ile debug modda başlatın
+
+### Komut Satırı ile
 
 ```bash
-make
-```
+# Build klasörü oluştur ve yapılandır
+mkdir build
+cd build
+cmake .. -G "MinGW Makefiles"  # Windows için
+# veya
+cmake ..  # Linux/macOS için
 
-### Manuel Derleme
+# Derle
+cmake --build .
 
-```bash
-gcc main.c src/bst_tree.c src/graph_loader.c src/min_heap.c src/route_solver.c -I. -o metro_planner -lm
+# Çalıştır
+./IstanbulMetroRotaPlanlayici  # Linux/macOS
+IstanbulMetroRotaPlanlayici.exe  # Windows
 ```
 
 ## Kullanım
 
-Programı çalıştırmak için:
+Program çalıştırıldığında grafiksel arayüz açılır:
 
-```bash
-./metro_planner
-```
-
-### Örnek Kullanım
-
-1. Program başladığında başlangıç ve hedef durak isimlerini girin:
-   ```
-   Baslangic duragini girin (Ornek: Kadikoy): Kadikoy
-   Hedef duragi girin (Ornek: Taksim): Taksim
-   ```
-
-2. İstediğiniz hesaplama yöntemini seçin:
-   - **1**: En kısa süre (Dijkstra)
-   - **2**: En az aktarma (BFS)
-   - **3**: Yeni rota belirle
-   - **4**: Çıkış
+1. **Hat Seçimi**: Sol ve sağ panellerde metro hat dairelerine tıklayarak başlangıç ve bitiş hatlarını seçin
+2. **Durak Seçimi**: Açılan dropdown listelerden durakları seçin
+3. **Rota Hesaplama**:
+   - **"En Kısa Süre"**: Dijkstra algoritması ile en kısa süreyi hesaplar
+   - **"En Az Durak"**: BFS algoritması ile en az duraklı rotayı hesaplar
+4. **Yoğunluk Güncelle**: Canlı trafik simülasyonu için yoğunluk değerlerini yeniler
 
 ## Proje Yapısı
 
 ```
-.
-├── main.c                 # Ana program dosyası
-├── includes/
-│   ├── structs.h         # Veri yapıları tanımları
-│   └── algorithms.h      # Algoritma fonksiyon prototipleri
-├── src/
-│   ├── bst_tree.c        # İkili arama ağacı implementasyonu
-│   ├── graph_loader.c    # Graf yükleme ve CSV parse işlemleri
-│   ├── min_heap.c        # Min-heap veri yapısı (Dijkstra için)
-│   └── route_solver.c    # Rota hesaplama algoritmaları
-├── metro.csv             # İstanbul metro ağı verileri
-└── Makefile              # Derleme yapılandırması
+IstanbulMetroRotaPlanlayici/
+├── main.c                    # Ana program dosyası (UI başlatma)
+├── CMakeLists.txt            # CMake yapılandırması
+├── metro.csv                 # İstanbul metro ağı verileri
+├── README.md                 # Bu dosya
+│
+├── includes/                 # Header dosyaları
+│   ├── structs.h            # Veri yapıları (Graph, Node, Edge, etc.)
+│   ├── algorithms.h         # Algoritma fonksiyon prototipleri
+│   └── ui.h                 # UI yapıları ve fonksiyon prototipleri
+│
+├── src/                      # Kaynak dosyaları
+│   ├── bst_tree.c           # İkili arama ağacı (BST) implementasyonu
+│   ├── graph_loader.c       # Graf yükleme ve CSV parse işlemleri
+│   ├── min_heap.c           # Min-heap veri yapısı (Dijkstra için)
+│   ├── route_solver.c       # Dijkstra ve BFS algoritmaları
+│   └── ui.c                 # Raylib tabanlı grafiksel arayüz
+│
+├── .vscode/                  # VS Code yapılandırması
+│   ├── settings.json        # Editor ayarları
+│   ├── c_cpp_properties.json # IntelliSense ayarları
+│   ├── tasks.json           # Derleme görevleri
+│   └── launch.json          # Debug/çalıştırma yapılandırması
+│
+├── .idea/                    # CLion yapılandırması (otomatik oluşturulur)
+├── cmake-build-debug/        # CLion build klasörü (otomatik oluşturulur)
+└── build/                    # VS Code/CLI build klasörü (otomatik oluşturulur)
 ```
 
 ## Veri Formatı

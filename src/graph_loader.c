@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../includes/structs.h" 
-#include "../includes/algorithms.h" 
+#include "structs.h"
+#include "algorithms.h"
 
 // 1. Yardımcı Fonksiyon: Kenar Ekleme
 void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score, int is_closed) {
