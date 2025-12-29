@@ -17,9 +17,9 @@ out/
 *.exe
 *.log
 
-# Backup dosyaları
-*_backup.c
-*_backup.h
+# Backup dosyaları (isteğe bağlı)
+# *_backup.c
+# *_backup.h
 *.bak
 
 # MacOS ve Windows sistem dosyaları

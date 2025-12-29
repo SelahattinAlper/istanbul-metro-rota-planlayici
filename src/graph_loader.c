@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "structs.h"
-#include "algorithms.h"
+#include "../includes/structs.h"
+#include "../includes/algorithms.h"
 
 // 1. Yardımcı Fonksiyon: Kenar Ekleme
-void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score, int is_closed) {
+void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score) {
     Edge* new_edge = (Edge*)malloc(sizeof(Edge));
     if (new_edge == NULL) { 
         perror("Bellek ayirma hatasi (Edge)"); 
@@ -46,7 +46,7 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
         return;
     }
 
-    // 1. GEÇİŞ: Temel Durak Bilgilerini ve İleri Kenarları (u -> v) Oluşturma
+    //Temel Durak Bilgilerini ve İleri Kenarları (u -> v) Oluşturma
     rewind(file); 
     
     // Başlığı tekrar atla 
@@ -88,7 +88,7 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
             int target_id, duration;
             if (sscanf(neighbor_token, "%d-%d", &target_id, &duration) == 2) {
                 // İLERİ KENARI EKLE (u -> v)
-                add_edge(&graph->stops[index], target_id, duration, line_str, 1, 0); 
+                add_edge(&graph->stops[index], target_id, duration, line_str, 1);
             }
             neighbor_token = strtok(NULL, ";\n");
         }
@@ -97,7 +97,7 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
         free(tmp);
     }
 
-    // 2. GEÇİŞ: Geri dönüş kenarlarını (v -> u) ekleyerek grafı çift yönlü yapma
+    //Geri dönüş kenarlarını (v -> u) ekleyerek grafı çift yönlü yapma
     
     rewind(file);
     
@@ -140,7 +140,7 @@ void parse_and_build_graph(const char* filename, Graph* graph) {
                 if (v_index >= 0 && v_index < MAX_STOPS && graph->stops[v_index].id != -1) { 
                     
                     // add_edge, v_id'yi kaynak olarak kullanır
-                    add_edge(&graph->stops[v_index], u_id, duration, line_str, 1, 0);
+                    add_edge(&graph->stops[v_index], u_id, duration, line_str, 1);
                 }
             }
             neighbor_token = strtok(NULL, ";\n");
@@ -173,5 +173,22 @@ void generate_random_congestion(Graph* graph) {
             
             edge = edge->next;
         }
+    }
+}
+
+// Graf Kenarları Bellek Temizleme
+void free_graph_edges(Graph* graph) {
+    if (graph == NULL) {
+        return;
+    }
+    
+    for (int i = 0; i < graph->num_stops; i++) {
+        Edge* current = graph->stops[i].head;
+        while (current != NULL) {
+            Edge* next = current->next;
+            free(current);
+            current = next;
+        }
+        graph->stops[i].head = NULL;
     }
 }

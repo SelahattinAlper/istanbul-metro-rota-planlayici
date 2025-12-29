@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <limits.h>
-#include "structs.h"
-#include "algorithms.h"
+#include "../includes/structs.h"
+#include "../includes/algorithms.h"
 
 
 // 1. Min-Heap Yapısını Oluşturma
@@ -38,7 +38,6 @@ void min_heapify(MinHeap* minHeap, int idx) {
     left = 2 * idx + 1;
     right = 2 * idx + 2;
 
-    // Karşılaştırmalar long long tipindeki 'distance' alanını kullanır
     if (left < minHeap->size && minHeap->array[left].distance < minHeap->array[smallest].distance)
         smallest = left;
 

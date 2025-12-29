@@ -4,9 +4,9 @@
 #include <time.h>
 #include <raylib.h>
 
-#include "structs.h"
-#include "algorithms.h"
-#include "ui.h"
+#include "includes/structs.h"
+#include "includes/algorithms.h"
+#include "includes/ui.h"
 
 // Kuyruk için extern tanımlamalar
 #define QUEUE_MAX_SIZE MAX_STOPS
@@ -71,8 +71,12 @@ int main() {
         EndDrawing();
     }
     CloseWindow();
-    // Bellek temizliği (gerçek projede tüm malloc'lar temizlenmelidir)
-    // free_bst(root_bst);
-    // free_graph_edges(&city_graph);
+
+    free_bst(root_bst);
+    printf("BST bellekten temizlendi.\n");
+
+    free_graph_edges(&city_graph);
+    printf("Graf kenarlari bellekten temizlendi.\n");
+    
     return 0;
 }

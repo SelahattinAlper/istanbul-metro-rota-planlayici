@@ -75,3 +75,24 @@ endif()
 # Veri dosyalarını build dizinine kopyala
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/metro.csv 
                ${CMAKE_CURRENT_BINARY_DIR}/metro.csv COPYONLY)
+
+# ==================== Konsol Versiyonu (Raylib Gerektirmez) ====================
+set(CONSOLE_SOURCES
+    main_backup.c
+    src/route_solver.c
+    src/min_heap.c
+    src/bst_tree.c
+    src/graph_loader.c
+)
+
+add_executable(MetroConsole ${CONSOLE_SOURCES})
+
+target_include_directories(MetroConsole PRIVATE 
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes
+)
+
+# Windows için ek kütüphaneler (konsol için sadece temel olanlar)
+if(WIN32)
+    target_link_libraries(MetroConsole PRIVATE)
+endif()

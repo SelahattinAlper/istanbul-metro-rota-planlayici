@@ -7,6 +7,7 @@
 Node* createNode(const char* name, int id);
 Node* insert_bst(Node* root, const char* name, int id);
 int search_bst(Node* root, const char* name);
+void free_bst(Node* root);  // Bellek temizleme
 
 // ==================== Min-Heap Fonksiyonları ====================
 MinHeap* createMinHeap(int capacity);
@@ -22,7 +23,8 @@ long long dijkstra_shortest_time(Graph* graph, int start_id, int end_id, int* ou
 
 // ==================== Graf Yükleme ====================
 void parse_and_build_graph(const char* filename, Graph* graph);
-void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score, int is_closed);
+void add_edge(Stop* stop, int target_id, int duration, const char* line_name, int congestion_score);
+void free_graph_edges(Graph* graph);  // Bellek temizleme
 
 // ==================== Yoğunluk Simülasyonu ====================
 void generate_random_congestion(Graph* graph);

@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
-#include <raylib.h>
+// Konsol versiyonu - Raylib gerekmez
+// #include <raylib.h>
 
 #include "includes/structs.h"
 #include "includes/algorithms.h"
@@ -81,12 +83,12 @@ int main() {
             case 1:
                 // a. En Kısa Süre (Dijkstra - src/route_solver.c ve src/min_heap.c)
                 printf("\n--- EN KISA SURE ROTASI (DIJKSTRA) ---\n");
-                dijkstra_shortest_time(&city_graph, start_id, end_id);
+                dijkstra_shortest_time(&city_graph, start_id, end_id, NULL);
                 break;
             case 2:
                 // b. En Az Aktarma/Durak (BFS - src/route_solver.c)
                 printf("\n--- EN AZ AKTARMA ROTASI (BFS) ---\n");
-                bfs_min_transfers(&city_graph, start_id, end_id);
+                bfs_min_transfers(&city_graph, start_id, end_id, NULL);
                 break;
             case 3:
                 printf("\n--- YENI ROTA BELIRLEME ---\n");

@@ -3,9 +3,9 @@
 #include <string.h>
 #include <math.h>
 #include <raylib.h>
-#include "structs.h"
-#include "algorithms.h"
-#include "ui.h"
+#include "../includes/structs.h"
+#include "../includes/algorithms.h"
+#include "../includes/ui.h"
 
 // --- Global Hat Bilgileri ---
 LineInfo lineInfos[LINE_COUNT] = {

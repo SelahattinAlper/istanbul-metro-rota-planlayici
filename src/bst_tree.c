@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "structs.h"
+#include "../includes/structs.h"
 
 
 //Yeni Düğüm Oluşturma
@@ -49,4 +49,13 @@ int search_bst(Node* root, const char* name) {
     } else {
         return search_bst(root->right, name); // Sağa git
     }
+}
+
+void free_bst(Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    free_bst(root->left);
+    free_bst(root->right);
+    free(root);
 }

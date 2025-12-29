@@ -14,9 +14,10 @@
 
 ## Gereksinimler
 
+- **Git** (Raylib'i indirmek için gerekli)
 - **CMake** (3.15 veya üzeri)
-- **C Derleyici**: GCC, Clang veya MSVC
-- **Raylib**: Otomatik olarak CMake ile indirilir
+- **C Derleyici**: GCC (MinGW-w64), Clang veya MSVC
+- **Raylib**: ✨ Otomatik olarak CMake ile indirilir (manuel kurulum gerekmez!)
 - **IDE (Önerilen)**: CLion veya VS Code + CMake Tools eklentisi
 
 ## Derleme
@@ -134,14 +135,6 @@ Projeye katkıda bulunmak isterseniz:
 3. Değişikliklerinizi commit edin (`git commit -am 'Yeni özellik eklendi'`)
 4. Branch'inizi push edin (`git push origin feature/yeniOzellik`)
 5. Pull Request oluşturun
-
-Detaylı bilgi için [CONTRIBUTING.md](CONTRIBUTING.md) dosyasına bakınız.
-
-## Dökümanlar
-
-- **[README.md](README.md)**: Projeye genel bakış ve kurulum
-- **[EXAMPLES.md](EXAMPLES.md)**: Detaylı kullanım örnekleri ve senaryolar
-- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Katkıda bulunma rehberi
 
 ## Lisans
 
